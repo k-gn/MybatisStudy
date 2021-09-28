@@ -1,0 +1,9 @@
+-- DROP TABLE IF EXISTS users;
+--
+-- create table users (
+--                        id BigInt not null auto_increment,
+--                        name varchar(100) not null,
+--                        age int not null,
+--                        primary key(id)
+-- );
+-- INSERT INTO users(name, age) VALUES ('user1', '20');

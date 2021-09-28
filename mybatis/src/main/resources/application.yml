@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mysql://localhost:3307/mybatis?serverTimezone=Asia/Seoul
+    username: cos
+    password: cos1234
+
+    jpa:
+      hibernate:
+        ddl-auto: update
+      show-sql: true
+      database: mysql
+      generate-ddl: true
+
+mybatis:
+  type-aliases-package: com.example.mybatis.dto
+  mapper-locations: mapper/**/*.xml

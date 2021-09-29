@@ -4,12 +4,33 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.mybatis.mapper.UserMapper">
+
+    <resultMap id="userMap" type="UserDto">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="age" column="age"/>
+        <collection property="boardDtoList" resultMap="boardMap"/>
+    </resultMap>
+
+    <resultMap id="boardMap" type="BoardDto">
+        <id property="boardId" column="board_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="title" column="board_title"/>
+        <result property="content" column="board_content"/>
+        <result property="createdAt" column="board_createdAt"/>
+    </resultMap>
+
+    <sql id="userLeftOuterJoinBoard">
+        LEFT OUTER JOIN board b ON u.id = b.user_id
+    </sql>
+
     <select id="findById" resultType="UserDto">
         SELECT * FROM users WHERE id = #{id}
     </select>
 
-    <select id="findAll" resultType="UserDto">
-        SELECT * FROM users
+    <select id="findAll" resultMap="userMap">
+        SELECT * FROM users u
+        <include refid="userLeftOuterJoinBoard"/>
     </select>
 
     <select id="nameCheck" resultType="String">

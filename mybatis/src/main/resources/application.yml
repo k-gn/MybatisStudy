@@ -15,3 +15,7 @@ spring:
 mybatis:
   type-aliases-package: com.example.mybatis.dto
   mapper-locations: mapper/**/*.xml
+
+pagehelper:
+  helper-dialect: mariadb
+  reasonable: true # 범위를 넘어가는 pageNum 일 경우 가능한 값으로 바꿔준다.

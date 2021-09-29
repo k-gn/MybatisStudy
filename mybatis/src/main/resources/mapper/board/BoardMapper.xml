@@ -18,7 +18,11 @@
         SELECT * FROM board
     </select>
 
+    <select id="findAllPaging" resultMap="boardMap">
+        SELECT * FROM board
+    </select>
+
     <insert id="save" useGeneratedKeys="true" keyProperty="boardId">
-        INSERT INTO board (userId, title, content) values (#{userId}, #{title}, #{content})
+        INSERT INTO board (user_id, board_title, board_content) values (#{userId}, #{title}, #{content})
     </insert>
 </mapper>

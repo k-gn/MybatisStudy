@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mybatistest.post.repository.PostCommendMapper">
+    <insert id="save" parameterType="Post" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO post(title, content, writer)
+        VALUES (#{title}, #{content}, #{writer})
+    </insert>
+</mapper>
+
+<!--
+    # Mybatis 문법
+
+    ## if
+    <if test='studentId != null and studentId != ""'>
+        AND STUDENT_ID = #{studentId}
+    </if>
+
+    ## choose
+    <choose>
+        <when test='"writer".equals(searchType)'>
+            AND WRITER = #{searchValue}
+        </when>
+        <when test='"content".equals(searchType)'>
+            AND CONTENT = #{searchValue}
+        </when>
+        <otherwise>
+            AND TITLE = #{searchValue}
+        </otherwise>
+    </choose>
+
+    ## where
+    <where>
+        <if test='title != null and title != ""'>
+            AND TITLE = #{title}
+        </if>
+        <if test='writer != null and writer != ""'>
+            AND WRITER = #{writer}
+        </if>
+        <if test='reportingDate != null and reportingDate != ""'>
+            AND REPORTING_DATE = #{reportingDate}
+        </if>
+    </where>
+
+    ## set
+    <set>
+        <if test='age != null age != ""'>
+            AGE = #{age},
+        </if>
+        <if test='name != null name != ""'>
+            NAME = #{name},
+        </if>
+        <if test='phoneNumber != null phoneNumber != ""'>
+            PHONE_NUMBER = #{phoneNumber},
+        </if>
+    </set>
+
+    ## trim
+    <trim prefix="WHERE" prefixOverrides="AND | OR">
+        <if test='title != null and title != ""'>
+            AND TITLE = #{title}
+        </if>
+        <if test='writer != null and writer != ""'>
+            AND WRITER = #{writer}
+        </if>
+        <if test='reportingDate != null and reportingDate != ""'>
+            AND REPORTING_DATE = #{reportingDate}
+        </if>
+    </trim>
+    <trim prefix="SET" prefixOverrides="," suffixOverrides=",">
+        <if test='age != null age != ""'>
+            AGE = #{age},
+        </if>
+        <if test='name != null name != ""'>
+            NAME = #{name},
+        </if>
+        <if test='phoneNumber != null phoneNumber != ""'>
+            PHONE_NUMBER = #{phoneNumber},
+        </if>
+    </trim>
+
+    ## foreach
+    <foreach collection="params" item="item" open="(" separator="," close=")">
+        #{item.studentId}
+    </foreach>
+
+-->

@@ -1,9 +1,9 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MySQL
+    url: jdbc:log4jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MySQL
     username: sa
     password:
-    driver-class-name: org.h2.Driver
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
 
   sql:
     init:
@@ -16,3 +16,19 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
   type-aliases-package: com.example.mybatistest
+
+logging:
+  level:
+    com:
+      zaxxer:
+        hikari: INFO
+    javax:
+      sql:
+        DataSource: OFF
+    jdbc:
+      audit: OFF # JDBC 트러블슈팅 경우를 제외하고는 사용 권장 X
+      resultset: OFF # ResultSet을 포함한 모든 JDBC 호출 정보를 출력
+      resultsettable: INFO  #SQL 결과 데이터 Table형식으로 출력
+      sqlonly: OFF     #SQL만 로그만 출력
+      sqltiming: INFO    #SQL + 소요시간 출력
+      connection: OFF  # 커넥션 연결/종료 정보 출력

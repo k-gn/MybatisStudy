@@ -83,4 +83,88 @@
         #{item.studentId}
     </foreach>
 
+    ## sql, include
+    <sql id="sql_dept">
+        WITH DEPT(
+            SELECT
+                  DEPT_CODE,
+                  DEPT_NAME,
+                  DEPT_LEVEL
+            FROM DEPARTMENT
+            WHERE DEPT_CODE = ${deptCode}
+        )
+    <sql>
+    <select id="selecMarketingtUser" resultType="UserInformaiton">
+        <include refid="sql_dept">
+            <property name="deptCode" value="MARKETING"/>
+        </include>
+        SELECT
+            UI.USER_ID,
+            UI.USER_NAME,
+            UI.USER_DEPARTMENT,
+            DEPT.DEPT_NAME,
+            DEPT.DEPT_LEVLEL
+        FROM USER_INFORMATION UI
+        INNER JOIN DEPT ON UI.USER_DEPARTMENT = DEPT.DEPT_CODE
+    </select>
+
+    ## resultmap
+
+    ### case1
+    <resultMap type="Car" id="Car">
+        <result column="owner_id" property="ownerId"/>
+        <result column="model_no" property="modelNo"/>
+        <result column="color" property="color"/>
+    </resultMap>
+
+    <resultMap type="Person" id="Person">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="age" property="age"/>
+        <collection property="car" resultMap="Car"/>
+    </resultMap>
+
+    <select id="selectPersonById" parameterType="String" resultMap="Person">
+        SELECT p.id, p.name, p.age
+               c.owner_id, c.model_no, c.color
+          FROM person p
+          JOIN car c
+            ON p.id = c.owner_id
+         WHERE p.id = #{id}
+    </select>
+
+    ### case2
+    <resultMap id="RegisterwithStudentCourse" type="dto.Register">
+        <id property="id" column="id" />
+        <result property="studentId" column="studentId" />
+        <result property="courseId" column="courseId" />
+        <result property="grade" column="grade" />
+        <result property="createDate" column="createDate" />
+        <association property="student" javaType="dto.Student">
+            <id property="id" column="studentId" />
+            <result property="studentNumber" column="studentNumber" />
+            <result property="name" column="studentName" />
+        </association>
+        <association property="course" javaType="dto.Course">
+            <id property="id" column="courseId" />
+            <result property="courseName" column="courseName" />
+            <result property="unit" column="unit" />
+        </association>
+    </resultMap>
+
+    ### case3
+    <resultMap id="BaseResultMap" type="...">
+    ... 중략
+        <collection property="orders" column="IDX" javaType="java.util.ArrayList"
+           ofType="..." select="selectOrderAssignListByUserIdx" />
+    </resultMap>
+    <select id="selectOrderAssignListByUserIdx" ...>
+        select
+          ... 컬럼들
+        from
+          ... 테이블
+        where a.USER_IDX = #{userIdx,jdbcType=INTEGER}
+          ... 중략
+
+      </select>
 -->

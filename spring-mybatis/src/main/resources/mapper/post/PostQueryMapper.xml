@@ -9,3 +9,32 @@
         SELECT * FROM post
     </select>
 </mapper>
+
+<!--
+    @Select("SELECT * FROM Notice WHERE ${field} LIKE '%${query}%'") 같이 어노테이션 방식도 존재한다.
+    성능이 중요하다면 mapUnderscoreToCamelCase 사용을 지양하자.
+    대량데이터를 조회하는 query 설정에 fetchSize 를 넣어주자.
+
+    ## Like
+    # MySQL/MariaDB
+    content like CONCAT('%',#{search},'%')
+
+
+    # Oracle
+    content like '%' ||  #{search} || '%'
+
+
+    # MSSQL
+    content like '%' + #{search} + '%'
+
+    ## enum 사용 시
+    https://goodteacher.tistory.com/653
+
+    #  <![CDATA[..]]>
+    - 마이바티스를 통해 쿼리문을 작성할 때 문자열 비교연산자나 부등호 처리를 위해 사용
+    <select id="boardListId" resultType="vo.BoardVO">
+        <![CDATA[
+            select * from board where idx < 8
+        ]]>
+    </select>
+-->
